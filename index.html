@@ -5,9 +5,63 @@
     <title>Document</title>
 </head>
 <body>
-    
+   <label for="navn">Hva er ditt navn?</label><br>
+   <input type="text" id="navn"><br><br>
+   <label for="alder">Hva er din alder?</label><br>
+   <input type="number" id="alder" min="0"><br><br>
+   <label for="han">Hankjønn</label><br>
+   <input type="radio" name="kjønn" id="han" value="han"><br>
+   <label for="hun">Hunkjønn</label><br>
+   <input type="radio" name="kjønn" id="hun" value="hun"><br>
+   <label for="de">Annet</label><br>
+   <input type="radio" name="kjønn" id="de" value="de"><br>
+   <input type="button" value="Tykk her for å begynne" onclick="intro()">
+   <p id="tekst"></p>
+   
 </body>
 <script>
-    
+	let navn;
+	let alder;
+	let kjønn;
+	let P1
+	let P2
+	let P3
+	let p1;
+	let p2;
+	let p3;
+	let konsoll;
+    function intro() {
+	   navn = document.getElementById("navn").value;
+	   alder = document.getElementById("alder").value;
+	   kjønn = document.querySelector('input[name="kjønn"]:checked').value;
+	   if(kjønn === "han") {
+		   P1 = "Han";
+		   P2 = "Ham"
+		   P3 = "Hans"
+		   p1 = "han";
+		   p2 = "ham";
+		   p3 = "hans";
+	   } else if(kjønn === "hun") {
+		   P1 = "Hun";
+		   P2 = "Henne";
+		   P3 = "Hennes";
+		   p1 = "hun";
+		   p2 = "henne";
+		   p3 = "hennes";
+	   } else {
+		   P1 = "De";
+		   P2 = "Dem";
+		   P3 = "Dems";
+		   p1 = "de";
+		   p2 = "dem";
+		   p3 = "dems";
+	   }
+		document.getElementById("tekst").innerHTML = "Du er en "+alder+" år gammel alv med navn "+navn+". Vil du bygge en ps5 eller xbox<br><label for=\"ps5\">PlayStation 5</label><input type=\"radio\" name=\"konsoll\" id=\"ps5\" value=\"PlayStation 5\"><br><label for\"xb\">XBox Series X</label><input type=\"radio\" name=\"konsoll\" id=\"xb\" value=\"Xbox Series X\"><br><input type=\"button\" value=\"Velg\" onclick=\"valg1()\">"
+		
+	}
+	function valg1(){
+		konsoll = document.querySelector('input[name="konsoll"]:checked').value;
+		document.getElementById("tekst").innerHTML = "Du finner materialene som trengs for å bygge en "+konsoll+". Når du er ferdig møter du nissemor. Hvordan vil du hilse på henne?<br><label for=\"høf\">Høflig</label><input type=\"radio\" name=\"hilsen\" id=\"høf\" value=\"høf\"><br><label for\"spy\">Spydig</label><input type=\"radio\" name=\"hilsen\" id=\"spy\" value=\"spy\"><br><input type=\"button\" value=\"Velg\" onclick=\"valg2()\">"
+	}
 </script>
 </html>
