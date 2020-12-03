@@ -30,6 +30,9 @@
 	let p2;
 	let p3;
 	let konsoll;
+	let hilsen;
+	let valg;
+	let nissen = "levende";
     function intro() {
 	   navn = document.getElementById("navn").value;
 	   alder = document.getElementById("alder").value;
@@ -62,6 +65,39 @@
 	function valg1(){
 		konsoll = document.querySelector('input[name="konsoll"]:checked').value;
 		document.getElementById("tekst").innerHTML = "Du finner materialene som trengs for å bygge en "+konsoll+". Når du er ferdig møter du nissemor. Hvordan vil du hilse på henne?<br><label for=\"høf\">Høflig</label><input type=\"radio\" name=\"hilsen\" id=\"høf\" value=\"høf\"><br><label for\"spy\">Spydig</label><input type=\"radio\" name=\"hilsen\" id=\"spy\" value=\"spy\"><br><input type=\"button\" value=\"Velg\" onclick=\"valg2()\">"
+	}
+	function valg2(){
+		hilsen = document.querySelector('input[name="hilsen"]:checked').value;
+		if(hilsen === "høf"){
+			document.getElementById("tekst").innerHTML = "\"Kunne du være så snill å hjelpe meg med å forgifte julenissen?\", spør Nissemor med en snill tone.<br><br>Vil du forgifte nissen?<br><label for=\"ja\">Ja</label><input type=\"radio\" name=\"valg\" id=\"ja\" value=\"ja\"><br><label for=\"nei\">Nei</label><input type=\"radio\" name=\"valg\" id=\"nei\" value=\"nei\"><br><input type=\"button\" onclick=\"forgift()\" value=\"Velg\">"
+			
+		} else if(hilsen === "spy"){
+			document.getElementById("tekst").innerHTML = "\"Øy! Hør nå her ditt jævla alvesvin. Dun snakker ikke sånn til Nissemor Gå tilbake tl jobb og gjør ferdig den forbanna konsollen!\", kom det fra nissemor som ikke var så fornøyd med spydigheten din."
+			slutt();
+		}
+	}
+	function forgift(){
+		valg = document.querySelector('input[name="valg"]:checked').value;
+		if(valg === "nei"){
+			slutt();
+		} else if(valg === "ja"){
+			document.getElementById("tekst").innerHTML = "Du tar imot giften og går til nissens soverom. På nattbordet står det et fat med kjeks g melk.<br><br>Hva skal du forgifte?<br><label for=\"kjeks\">Kjeks</label><input type=\"radio\" name=\"mat\" id=\"kjeks\" value=\"kjeks\"><br><label for=\"melk\">Melk</label><input type=\"radio\" name=\"mat\" id=\"melk\" value=\"melk\"><br><input type=\"button\" onclick=\"slutt()\">"
+			nissen = "død";
+		}
+	}
+	function slutt2(){
+		document.getElementById("tekst").innerHTML += ", men...<br><br>"
+		setTimeout(slutt3(), 3000);
+	}
+	function slutt3(){
+		document.getElementById("tekst").innerHTML += "På grunn av dine valg fikk ikke leder av Nord-Korea, Kim Jong Un, en PlayStation 5 til jul. Dette gjør ham frustrert og fortvilet. Dermed sendes en atombombe 1. juledag og en ny verdenskrig er i gang."
+	}
+	function slutt(){
+		if(nissen === "død"){
+			document.getElementById("tekst").innerHTML = "Du lyktes i å ta livet av julenissen"
+			setTimeout(slutt2(), 5000);
+			
+		}
 	}
 </script>
 </html>
