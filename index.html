@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
+<style>
+    .boss{
+        visibility: hidden;
+    }
+    
+</style>
 <body>
+    <audio id="musikk">
+        <source src="Digimon%20Story%20Cyber%20SleuthRoyal%20Knights'%20Battle%20Theme%20(OST).mp3">
+    </audio>
    <label for="navn">Hva er ditt navn?</label><br>
    <input type="text" id="navn"><br><br>
    <label for="alder">Hva er din alder?</label><br>
@@ -16,8 +25,17 @@
    <label for="de">Annet</label><br>
    <input type="radio" name="kjønn" id="de" value="de"><br>
    <input type="button" value="Tykk her for å begynne" onclick="intro()">
-   <p id="tekst"></p>
-   
+    <p id="tekst"></p>
+    <input type="button" value="Spark" onclick="angrep(2)" class="boss">
+    <input type="button" value="Slå" onclick="angrep(1)" class="boss">
+    <input type="button" value="Blokker" onclick="nAngrep(1)" class="boss"><br>
+    <label for="nisseHP" class="boss">St. Nicholas</label>
+    <meter value="500" class="boss" id="nisseHP" max="500"></meter><br>
+    <label for="alvHP" id="alvnavn" class="boss"></label>
+    <meter value="500" class="boss" id="alvHP" max="500"></meter><br>
+    <img src="nissen.jpg" id="nisse" class="boss">
+    
+    
 </body>
 <script>
 	let navn;
@@ -31,9 +49,15 @@
 	let p3;
 	let konsoll;
 	let hilsen;
-	let valg;
-	let nissen = "levende";
+	let mat;
+    let nVent = 0;
     function intro() {
+        document.getElementById("nisseHP").value = 500;
+        document.getElementById("alvHP").value = 500;
+        for (var i = 0; i < document.getElementsByClassName("boss").length; i++) {
+            document.getElementsByClassName("boss")[i].style.visibility = "hidden";
+        }
+        document.getElementById("musikk").pause();
 	   navn = document.getElementById("navn").value;
 	   alder = document.getElementById("alder").value;
 	   kjønn = document.querySelector('input[name="kjønn"]:checked').value;
@@ -59,45 +83,90 @@
 		   p2 = "dem";
 		   p3 = "dems";
 	   }
-		document.getElementById("tekst").innerHTML = "Du er en "+alder+" år gammel alv med navn "+navn+". Vil du bygge en ps5 eller xbox<br><label for=\"ps5\">PlayStation 5</label><input type=\"radio\" name=\"konsoll\" id=\"ps5\" value=\"PlayStation 5\"><br><label for\"xb\">XBox Series X</label><input type=\"radio\" name=\"konsoll\" id=\"xb\" value=\"Xbox Series X\"><br><input type=\"button\" value=\"Velg\" onclick=\"valg1()\">"
+		document.getElementById("tekst").innerHTML = "Du er en "+alder+" år gammel alv som heter "+navn+". Du har jobbet her på nordpolen så lenge du kan huske. Snart er det jul igjen og folk trenger gavene sine fra julenissen. Derfor må dere alver begynne å bygge lekene nå.<br>Det har nettopp kommet ut to nye spillkonsoller som mange kommer til å ønske seg til julegave.<br><br>Hvilken har du lyst til å lage?<br><label for=\"ps5\">PlayStation 5</label><input type=\"radio\" name=\"konsoll\" id=\"ps5\" value=\"PlayStation 5\"><br><label for\"xb\">XBox Series X</label><input type=\"radio\" name=\"konsoll\" id=\"xb\" value=\"Xbox Series X\"><br><input type=\"button\" value=\"Velg\" onclick=\"valg1()\">"
 		
 	}
 	function valg1(){
 		konsoll = document.querySelector('input[name="konsoll"]:checked').value;
-		document.getElementById("tekst").innerHTML = "Du finner materialene som trengs for å bygge en "+konsoll+". Når du er ferdig møter du nissemor. Hvordan vil du hilse på henne?<br><label for=\"høf\">Høflig</label><input type=\"radio\" name=\"hilsen\" id=\"høf\" value=\"høf\"><br><label for\"spy\">Spydig</label><input type=\"radio\" name=\"hilsen\" id=\"spy\" value=\"spy\"><br><input type=\"button\" value=\"Velg\" onclick=\"valg2()\">"
+		document.getElementById("tekst").innerHTML = "Du går til lageret for å finne materialene som trengs for en "+konsoll+". Mens du er der tenker du på hvor dårlig du er blitt behandlet av Julenissen. Det er ikke han som bygger lekene, men du. Hvorfor skal Julenissen da få all æren.<br>Etter du er ferdig med å bygge en "+konsoll+" møter du på Nissemor. Det ser ut som hun tenker på noe. Du går opp til henne for å finne ut hva hun tenker på.<br><br>Hvordan hilser du på henne?<br><label for=\"høf\">Høflig</label><input type=\"radio\" name=\"hilsen\" id=\"høf\" value=\"høf\"><br><label for\"spy\">Spydig</label><input type=\"radio\" name=\"hilsen\" id=\"spy\" value=\"spy\"><br><input type=\"button\" value=\"Velg\" onclick=\"valg2()\">"
 	}
 	function valg2(){
 		hilsen = document.querySelector('input[name="hilsen"]:checked').value;
 		if(hilsen === "høf"){
-			document.getElementById("tekst").innerHTML = "\"Kunne du være så snill å hjelpe meg med å forgifte julenissen?\", spør Nissemor med en snill tone.<br><br>Vil du forgifte nissen?<br><label for=\"ja\">Ja</label><input type=\"radio\" name=\"valg\" id=\"ja\" value=\"ja\"><br><label for=\"nei\">Nei</label><input type=\"radio\" name=\"valg\" id=\"nei\" value=\"nei\"><br><input type=\"button\" onclick=\"forgift()\" value=\"Velg\">"
+			document.getElementById("tekst").innerHTML = navn+" : Hei Nissemor, trenger du hjelp til noe?<br>Nissemor: Ja, du skjønner jeg er lei av Nordpolen og Julenissen. Det er bare ikke slik det brukte å være. ___, og den eneste måten jeg har for å komme meg bort herfra er å forgifte Julenissen. Vil du hjelpe meg med det?<br><label for=\"ja\">Ja</label><input type=\"radio\" name=\"valg\" id=\"ja\" value=\"ja\"><br><label for=\"nei\">Nei</label><input type=\"radio\" name=\"valg\" id=\"nei\" value=\"nei\"><br><input type=\"button\" onclick=\"valg3()\" value=\"Velg\">"
 			
 		} else if(hilsen === "spy"){
-			document.getElementById("tekst").innerHTML = "\"Øy! Hør nå her ditt jævla alvesvin. Dun snakker ikke sånn til Nissemor Gå tilbake tl jobb og gjør ferdig den forbanna konsollen!\", kom det fra nissemor som ikke var så fornøyd med spydigheten din."
-			slutt();
+			document.getElementById("tekst").innerHTML = navn+" : Jeg ser du tenker hardt med den lille hjernen din. Trenger du hjelp eller?<br>Nissemor: Hva i alle dager! Hvem er du? Kom deg bort fra meg med en gang!"
+            if(konsoll === "PlayStation 5"){
+                takkekort();
+            } else{
+                verdenskrig();
+            }
 		}
 	}
-	function forgift(){
+	function valg3(){
 		valg = document.querySelector('input[name="valg"]:checked').value;
 		if(valg === "nei"){
-			slutt();
+			document.getElementById("tekst").innerHTML = navn+" : Nei! Hva i alle dager? Forgifte selveste Julenissen? Er du gal eller? Jeg har jo lyst på gave fra han. Jeg har ønsket meg en Nintendo Switch så lenge nå, og Julenissen er den eneste som kan gi den til meg. Aner du hvor vanskelig det har vært å finne en Nintendo Switch nå for tiden?<br>Nissemor: Jeg bryr meg ikke om deg og den Switchen din!"
+            verdenskrig();
 		} else if(valg === "ja"){
-			document.getElementById("tekst").innerHTML = "Du tar imot giften og går til nissens soverom. På nattbordet står det et fat med kjeks g melk.<br><br>Hva skal du forgifte?<br><label for=\"kjeks\">Kjeks</label><input type=\"radio\" name=\"mat\" id=\"kjeks\" value=\"kjeks\"><br><label for=\"melk\">Melk</label><input type=\"radio\" name=\"mat\" id=\"melk\" value=\"melk\"><br><input type=\"button\" onclick=\"slutt()\">"
-			nissen = "død";
+			document.getElementById("tekst").innerHTML = "Nissemor: Takk for at du vil hjelpe meg, men det jeg har lurt på så lenge er hva jeg skal forgifte han med.<br>"+navn+" : Hva er det han liker best?<br>Nissemor: Ja! Der har vi det! Han er utrolig glad i kakao og kjeks, men jeg har bare nok gift til å legge det i en av de. Hvilken skal jeg legge giften i?<br><label for=\"kakao\">Kakao</label><input type=\"radio\" name=\"mat\" id=\"kakao\" value=\"kakao\"><br><label for=\"kjeks\">Kjeks</label><input type=\"radio\" name=\"mat\" id=\"kjeks\" value=\"kjeks\"><br><input type=\"button\" onclick=\"valg4()\" value=\"Velg\">"
 		}
 	}
-	function slutt2(){
-		document.getElementById("tekst").innerHTML += ", men...<br><br>"
-		setTimeout(slutt3(), 3000);
-	}
-	function slutt3(){
-		document.getElementById("tekst").innerHTML += "På grunn av dine valg fikk ikke leder av Nord-Korea, Kim Jong Un, en PlayStation 5 til jul. Dette gjør ham frustrert og fortvilet. Dermed sendes en atombombe 1. juledag og en ny verdenskrig er i gang."
-	}
-	function slutt(){
-		if(nissen === "død"){
-			document.getElementById("tekst").innerHTML = "Du lyktes i å ta livet av julenissen"
-			setTimeout(slutt2(), 5000);
-			
-		}
-	}
+    function valg4(){
+        mat = document.querySelector('input[name="mat"]:checked').value;
+        if(mat === "kakao"){
+            document.getElementById("tekst").innerHTML = "Du og Nissemor forgiftet Julenissens kopp kakao og serverte den attmed kjeksene. Etter kort tid satt Julenissen i stolen sin stille. Det virket ut som om han sov."
+            verdenskrig();
+        } else{
+            document.getElementById("tekst").innerHTML = "Du og Nissemor forgiftet Julenissens kjekse og serverte den med en kopp kakao. Du kjente at humøret i rommet endret seg når han så på kjeksen med et skeptisk blikk.<br><input type=\"button\" value=\"Oi da\" onclick=\"nisse()\">"
+        }
+    }
+    function takkekort(){
+        document.getElementById("tekst").innerHTML += "<br><br>Det er nå noen uker siden juleaften, og nå er tiden for alle takkebrevene å komme til Nordpolen. De er som oftest skrevet til Julenissen men noen ganger i blant er de skrevet direkte til en av alvene.<br>Postmann: Det har kommet et brev til "+navn+". Hvor er "+p1+"?<br>"+navn+" : Jeg er rett her.<br>Postmann: Det har kommet et brev fra Mr. Kim.<br>"+navn+" : Mr. Kim? Hvem er det?<br>Postmann: Vet ikke jeg. Du får lese brevet å se.<br><br>Kjære "+navn+".<br>Jeg vil bare si tusen takk for at du laget min PS5. Jeg har lenge ønsket meg en, men rakk ikke å bestille da den ble lansert. Da ble jeg og mitt folk ble veldig sint. Jeg advarte verdenen om hva som skulle skje dersom jeg ikke fikk en PS5 til jul, og jeg er derfor glad for at det var noen som tok meg seriøst og laget en for meg. :D<br>M.v.h. Kim Jong Un "
+    }
+    function verdenskrig(){
+        document.getElementById("tekst").innerHTML += "<br><br>Det var nå en kort tid etter julaften. Alle var sliten og satt seg derfor foran TV-en for å se på nyhetene. Da vi skrudde på TV-en ble vi møtt med et kjent fjes. Det var Kim Jong Un. Hva ville han nå da?<br>Han begynte å snakke, og tekstingen fulgte etter.<br>Kim: Jeg advarte dere, så hvorfor kom dere ikke med en PS5 til meg? Vil dere alle dø? Knappen er rett her, klar for å trykkes.<br>Etter dette var på nyhetene ble hele verden rystet, og 3. verdenskrig var offisielt startet."
+    }
+    function nisse(){
+        for (var i = 0; i < document.getElementsByClassName("boss").length; i++) {
+            document.getElementsByClassName("boss")[i].style.visibility = "visible";
+        }
+        document.getElementById("alvnavn").textContent = navn;
+        document.getElementById("tekst").innerHTML = "Velg et trekk:"
+        document.getElementById("musikk").play();
+    }
+    function angrep(i){
+        document.getElementById("nisseHP").value -= 10 * i;
+        if(document.getElementById("nisseHP").value > 0){
+            nAngrep(2);
+        } else{
+            document.getElementById("musikk").pause();
+            for (var i = 0; i < document.getElementsByClassName("boss").length; i++) {
+            document.getElementsByClassName("boss")[i].style.visibility = "hidden";
+        }
+            document.getElementById("tekst").innerHTML = "Julenissens lubne mage spretter ned i bakken når du gir det avsluttende slaget.<br>Nissemor: Dra tilbake til verkstedet før noen får mistanke. Jeg kan rydde opp her."
+            verdenskrig();
+        }
+    }
+    function nAngrep(i){
+        if(nVent === 1){
+            document.getElementById("alvHP").value -= 20 * i;
+            nVent = 0;
+        } else{nVent = 1;}
+        console.log(document.getElementById("nisseHP").value);
+        console.log(document.getElementById("alvHP").value);
+        if(document.getElementById("alvHP").value === 0){
+            død();
+        }
+    }
+    function død(){
+        document.getElementById("musikk").pause();
+        for (var i = 0; i < document.getElementsByClassName("boss").length; i++) {
+            document.getElementsByClassName("boss")[i].style.visibility = "hidden";
+        }
+        document.getElementById("tekst").innerHTML = "Julenissen slår sitt siste slag og hodet ditt treffer bakken. Du ble ikke savnet."
+    }
+
 </script>
 </html>
