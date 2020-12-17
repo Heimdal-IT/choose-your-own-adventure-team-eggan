@@ -11,7 +11,10 @@
     
 </style>
 <body>
-    <audio id="musikk">
+   <audio id="musikk">
+   		<source src="Playd%C3%A5se.mp3">
+   </audio>
+    <audio id="bmusikk">
         <source src="Nisse.mp3">
     </audio>
    <label for="navn">Hva er ditt navn?</label><br>
@@ -57,7 +60,8 @@
         for (var i = 0; i < document.getElementsByClassName("boss").length; i++) {
             document.getElementsByClassName("boss")[i].style.visibility = "hidden";
         }
-        document.getElementById("musikk").pause();
+		document.getElementById("musikk").play();
+        document.getElementById("bmusikk").pause();
 	   navn = document.getElementById("navn").value;
 	   alder = document.getElementById("alder").value;
 	   kjønn = document.querySelector('input[name="kjønn"]:checked').value;
@@ -134,7 +138,8 @@
         }
         document.getElementById("alvnavn").textContent = navn;
         document.getElementById("tekst").innerHTML = "Velg et trekk:"
-        document.getElementById("musikk").play();
+		document.getElementById("musikk").pause();
+        document.getElementById("bmusikk").play();
     }
     function angrep(i){
         document.getElementById("nisseHP").value -= 10 * i;
@@ -161,7 +166,8 @@
         }
     }
     function død(){
-        document.getElementById("musikk").pause();
+        document.getElementById("bmusikk").pause();
+		document.getElementById("musikk").play();
         for (var i = 0; i < document.getElementsByClassName("boss").length; i++) {
             document.getElementsByClassName("boss")[i].style.visibility = "hidden";
         }
