@@ -54,6 +54,8 @@
 	let hilsen;
 	let mat;
     let nVent = 0;
+	let a = 0;
+	let nisseTrekk = ["Nissen penetrerte deg med en peppermyntestang", "Nissen ødela fjeset ditt med julekuler", "Nissen moste deg med den enorme kroppen sin"];
     function intro() {
         document.getElementById("nisseHP").value = 500;
         document.getElementById("alvHP").value = 500;
@@ -157,10 +159,15 @@
     function nAngrep(i){
         if(nVent === 1){
             document.getElementById("alvHP").value -= 20 * i;
+			document.getElementById("tekst").innerHTML = nisseTrekk[a];
+			a += 1;
+			if(a === 3){a = 0}
             nVent = 0;
-        } else{nVent = 1;}
-        console.log(document.getElementById("nisseHP").value);
-        console.log(document.getElementById("alvHP").value);
+        } else{
+			document.getElementById("tekst").innerHTML = "Nissen forbereder et kraftig angrep"
+			nVent = 1;
+		}
+       
         if(document.getElementById("alvHP").value === 0){
             død();
         }
