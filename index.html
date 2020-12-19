@@ -9,14 +9,56 @@
         visibility: hidden;
     }
     
+    body{
+        background-image: url(img/Workshop.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: monospace;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    #tekst{
+        background-color: rgba(200,200,200,.6);
+        position: absolute;
+        bottom: 0px;
+        text-align: center;
+        border-style: solid;
+        border-width: medium;
+        border-color: white;
+        width: 97%;
+    }
+    
+    
+    #skjema{
+        background-color: rgba(200,200,200,.6);
+        text-align: center;
+        border-style: solid;
+        border-width: medium;
+        border-color: white;
+    }
+    
+    #nisse{
+        height: 50%;
+    }
+    
+    #figth{
+        background-color: rgba(200,200,200,.6);
+        position: absolute;
+        bottom: 0px;
+        text-align: center;
+        border-style: solid;
+        border-width: medium;
+        border-color: white;
+    }
+    
 </style>
 <body>
-   <audio id="musikk">
-   		<source src="Playd%C3%A5se.mp3">
-   </audio>
-    <audio id="bmusikk">
+    <audio id="musikk">
         <source src="Nisse.mp3">
     </audio>
+    
+    <div id="skjema">
    <label for="navn">Hva er ditt navn?</label><br>
    <input type="text" id="navn"><br><br>
    <label for="alder">Hva er din alder?</label><br>
@@ -28,15 +70,28 @@
    <label for="de">Annet</label><br>
    <input type="radio" name="kjønn" id="de" value="de"><br>
    <input type="button" value="Tykk her for å begynne" onclick="intro()">
+     </div>
+        
     <p id="tekst"></p>
+    
+        <div id="fight">
+        
+        <br>
     <input type="button" value="Spark" onclick="angrep(2)" class="boss">
     <input type="button" value="Slå" onclick="angrep(1)" class="boss">
     <input type="button" value="Blokker" onclick="nAngrep(1)" class="boss"><br>
+        
+   
+    
+    
+    
     <label for="nisseHP" class="boss">St. Nicholas</label>
     <meter value="500" class="boss" id="nisseHP" max="500"></meter><br>
     <label for="alvHP" id="alvnavn" class="boss"></label>
     <meter value="500" class="boss" id="alvHP" max="500"></meter><br>
-    <img src="nissen.jpg" id="nisse" class="boss">
+    <img src="img/nissen.jpg" id="nisse" class="boss">
+    </div>
+    
     
     
 </body>
@@ -54,16 +109,13 @@
 	let hilsen;
 	let mat;
     let nVent = 0;
-	let a = 0;
-	let nisseTrekk = ["Nissen penetrerte deg med en peppermyntestang", "Nissen ødela fjeset ditt med julekuler", "Nissen moste deg med den enorme kroppen sin"];
     function intro() {
         document.getElementById("nisseHP").value = 500;
         document.getElementById("alvHP").value = 500;
         for (var i = 0; i < document.getElementsByClassName("boss").length; i++) {
             document.getElementsByClassName("boss")[i].style.visibility = "hidden";
         }
-		document.getElementById("musikk").play();
-        document.getElementById("bmusikk").pause();
+        document.getElementById("musikk").pause();
 	   navn = document.getElementById("navn").value;
 	   alder = document.getElementById("alder").value;
 	   kjønn = document.querySelector('input[name="kjønn"]:checked').value;
@@ -140,8 +192,7 @@
         }
         document.getElementById("alvnavn").textContent = navn;
         document.getElementById("tekst").innerHTML = "Velg et trekk:"
-		document.getElementById("musikk").pause();
-        document.getElementById("bmusikk").play();
+        document.getElementById("musikk").play();
     }
     function angrep(i){
         document.getElementById("nisseHP").value -= 10 * i;
@@ -159,22 +210,16 @@
     function nAngrep(i){
         if(nVent === 1){
             document.getElementById("alvHP").value -= 20 * i;
-			document.getElementById("tekst").innerHTML = nisseTrekk[a];
-			a += 1;
-			if(a === 3){a = 0}
             nVent = 0;
-        } else{
-			document.getElementById("tekst").innerHTML = "Nissen forbereder et kraftig angrep"
-			nVent = 1;
-		}
-       
+        } else{nVent = 1;}
+        console.log(document.getElementById("nisseHP").value);
+        console.log(document.getElementById("alvHP").value);
         if(document.getElementById("alvHP").value === 0){
             død();
         }
     }
     function død(){
-        document.getElementById("bmusikk").pause();
-		document.getElementById("musikk").play();
+        document.getElementById("musikk").pause();
         for (var i = 0; i < document.getElementsByClassName("boss").length; i++) {
             document.getElementsByClassName("boss")[i].style.visibility = "hidden";
         }
